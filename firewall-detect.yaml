@@ -1,0 +1,37 @@
+id: Firewall-service-detect
+
+info:
+  name: Firewall-detect
+  author: prasana.renganathan
+  severity: info
+  description: Used to find the name of the firewall service used
+  reference: https://
+  tags: tags
+
+requests:
+- raw:
+  - |+
+    GET /{{param}} HTTP/2
+    Host: {{Hostname}}
+
+  attack: batteringram
+  payloads:
+    param:
+    - '?q=%3Cscript%3Ealert(1)%3C/script%3E'
+  matchers:
+  - type: word
+    name: Akamai-Firewall
+    words:
+      - "AkamaiGHost"
+    part: header
+  - type: word
+    name: Akamai-Firewall-detect
+    words:
+      - "Reference&#32;&#35;18"
+    part: body
+  - type: word
+    name: imperv-firewall-detect
+    words: 
+      - 'src="/Vnsane-to-done-I-set-I-praten-Gods-nor-thy-Mind-"'
+      - '/_Incapsula_Resource?CWUDNSAI='
+    condition: or
